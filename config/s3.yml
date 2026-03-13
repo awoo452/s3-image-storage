@@ -1,0 +1,17 @@
+default: &default
+  bucket: <%= ENV["AWS_BUCKET"].presence %>
+  region: <%= ENV["AWS_REGION"].presence || ENV["AWS_DEFAULT_REGION"].presence || "us-west-1" %>
+  access_key_id: <%= ENV["AWS_ACCESS_KEY_ID"] %>
+  secret_access_key: <%= ENV["AWS_SECRET_ACCESS_KEY"] %>
+
+development:
+  <<: *default
+  bucket: <%= ENV["AWS_BUCKET"].presence || "s3-image-storage-dev" %>
+
+test:
+  <<: *default
+  bucket: <%= ENV["AWS_BUCKET"].presence || "s3-image-storage-test" %>
+
+production:
+  <<: *default
+  bucket: <%= ENV["AWS_BUCKET"].presence || "s3-image-storage-prod" %>

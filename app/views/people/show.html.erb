@@ -1,0 +1,28 @@
+<h1><%= @person.name %></h1>
+
+<p><%= link_to "Back to people", people_path %></p>
+<p><%= link_to "Edit", edit_person_path(@person) %></p>
+
+<h2>Main image</h2>
+<% if @person.image_key.present? %>
+  <% proxy_url = image_proxy_url(@person.image_key, width: 900, height: 900, fit: "inside", format: "webp") %>
+  <%= fallback_image_tag proxy_url, alt: @person.name, width: 300 %>
+  <p>Key: <%= @person.image_key %></p>
+<% else %>
+  <p>No main image yet.</p>
+<% end %>
+
+<h2>Alt images</h2>
+<% if @person.alt_image_keys.present? %>
+  <ul>
+    <% @person.alt_image_keys.each do |key| %>
+      <li>
+        <% proxy_url = image_proxy_url(key, width: 900, height: 900, fit: "inside", format: "webp") %>
+        <%= fallback_image_tag proxy_url, alt: "#{@person.name} alt", width: 240 %>
+        <div>Key: <%= key %></div>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No alt images yet.</p>
+<% end %>

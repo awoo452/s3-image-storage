@@ -1,0 +1,41 @@
+# PostgreSQL
+#   gem install pg
+#   Ensure the pg gem is defined in your Gemfile
+#
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV.fetch("PGHOST", "localhost") %>
+  port: <%= ENV.fetch("PGPORT", 5432) %>
+  username: <%= ENV.fetch("PGUSER", "") %>
+  password: <%= ENV.fetch("PGPASSWORD", "") %>
+
+development:
+  <<: *default
+  database: s3_image_storage_development
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *default
+  database: s3_image_storage_test
+
+# Production databases. These can point to the same server with separate DBs.
+production:
+  primary:
+    <<: *default
+    database: s3_image_storage_production
+  cache:
+    <<: *default
+    database: s3_image_storage_production_cache
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *default
+    database: s3_image_storage_production_queue
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *default
+    database: s3_image_storage_production_cable
+    migrations_paths: db/cable_migrate

@@ -1,0 +1,31 @@
+<%= form_with(model: product, local: true) do |form| %>
+  <% if product.errors.any? %>
+    <div>
+      <h2><%= pluralize(product.errors.count, "error") %> prevented saving:</h2>
+      <ul>
+        <% product.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :image, "Main image" %><br>
+    <%= form.file_field :image %>
+  </div>
+
+  <div>
+    <%= form.label :alt_image, "Alt image" %><br>
+    <%= form.file_field :alt_image %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

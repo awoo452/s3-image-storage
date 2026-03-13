@@ -1,0 +1,22 @@
+<h1><%= @product.name %></h1>
+
+<p><%= link_to "Back to products", products_path %></p>
+<p><%= link_to "Edit", edit_product_path(@product) %></p>
+
+<h2>Main image</h2>
+<% if @product.image_key.present? %>
+  <% proxy_url = image_proxy_url(@product.image_key, width: 900, height: 900, fit: "inside", format: "webp") %>
+  <%= fallback_image_tag proxy_url, alt: @product.name, width: 300 %>
+  <p>Key: <%= @product.image_key %></p>
+<% else %>
+  <p>No main image yet.</p>
+<% end %>
+
+<h2>Alt image</h2>
+<% if @product.image_alt_key.present? %>
+  <% proxy_url = image_proxy_url(@product.image_alt_key, width: 900, height: 900, fit: "inside", format: "webp") %>
+  <%= fallback_image_tag proxy_url, alt: "#{@product.name} alt", width: 300 %>
+  <p>Key: <%= @product.image_alt_key %></p>
+<% else %>
+  <p>No alt image yet.</p>
+<% end %>
