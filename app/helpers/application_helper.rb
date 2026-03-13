@@ -40,7 +40,7 @@ module ApplicationHelper
       end
     end
 
-    path_key = key.to_s.sub(%r{\\A/}, "")
+    path_key = key.to_s.sub(%r{\A/}, "")
     path = "/#{path_key}"
 
     params = {
@@ -60,7 +60,7 @@ module ApplicationHelper
     signature = OpenSSL::HMAC.hexdigest("sha256", signing_key, signature_base)
     final_query = query.present? ? "#{query}&signature=#{signature}" : "signature=#{signature}"
 
-    "#{base.chomp(\"/\")}#{path}?#{final_query}"
+    "#{base.chomp("/")}#{path}?#{final_query}"
   end
 
   def fallback_image_tag(src, fallback: nil, **options)
@@ -68,9 +68,9 @@ module ApplicationHelper
 
     fallback_url = fallback.presence || image_path("branding/logo.svg")
     data = (options[:data] || {}).dup
-    data[:controller] = [data[:controller], "fallback-image"].compact.join(" ")
+    data[:controller] = [ data[:controller], "fallback-image" ].compact.join(" ")
     data[:"fallback_image_src_value"] = fallback_url
-    data[:action] = [data[:action], "error->fallback-image#swap"].compact.join(" ")
+    data[:action] = [ data[:action], "error->fallback-image#swap" ].compact.join(" ")
     options[:data] = data
     image_tag(src, **options)
   end

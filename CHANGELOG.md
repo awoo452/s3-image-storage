@@ -1,3 +1,11 @@
+## 0.1.1 (2026-03-12)
+
+### Added
+- Stuff to make github stop yelling at me
+
+### Changed
+- Other stuff to make github stop yelling at me
+
 ## 0.1.0 (2026-03-12)
 
 1. Added S3 upload service, key builder, and image proxy helpers.

@@ -41,7 +41,7 @@ class S3Service
     return nil if key.blank?
 
     cache_key = "s3:presign:#{key}:#{expires_in}"
-    cache_ttl = [expires_in.to_i - 60, 60].max
+    cache_ttl = [ expires_in.to_i - 60, 60 ].max
 
     Rails.cache.fetch(cache_key, expires_in: cache_ttl) do
       signer = Aws::S3::Presigner.new(client: @client)
@@ -119,22 +119,22 @@ class S3Service
   end
 
   def required_config_present?
-    [@config[:bucket], @config[:region], @config[:access_key_id], @config[:secret_access_key]].all?(&:present?)
+    [ @config[:bucket], @config[:region], @config[:access_key_id], @config[:secret_access_key] ].all?(&:present?)
   end
 
   def normalize_upload(uploaded)
     if uploaded.respond_to?(:tempfile)
       io = File.open(uploaded.tempfile.path, "rb")
-      return [io, uploaded.content_type, true]
+      return [ io, uploaded.content_type, true ]
     end
 
     if uploaded.is_a?(String)
       io = File.open(uploaded, "rb")
-      return [io, nil, true]
+      return [ io, nil, true ]
     end
 
     if uploaded.respond_to?(:read)
-      return [uploaded, nil, false]
+      return [ uploaded, nil, false ]
     end
 
     raise ArgumentError, "Unsupported upload type: #{uploaded.class}"
