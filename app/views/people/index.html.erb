@@ -1,0 +1,29 @@
+<h1>People</h1>
+
+<p><%= link_to "New person", new_person_path %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Main image</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @people.each do |person| %>
+      <tr>
+        <td><%= link_to person.name, person_path(person) %></td>
+        <td>
+          <% if person.image_key.present? %>
+            <% proxy_url = image_proxy_url(person.image_key, width: 240, height: 240, fit: "inside", format: "webp") %>
+            <%= fallback_image_tag proxy_url, alt: person.name, width: 120, height: 120 %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to "Edit", edit_person_path(person) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

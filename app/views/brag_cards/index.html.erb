@@ -1,0 +1,29 @@
+<h1>Brag Cards</h1>
+
+<p><%= link_to "New brag card", new_brag_card_path %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Image</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @brag_cards.each do |card| %>
+      <tr>
+        <td><%= link_to card.title, brag_card_path(card) %></td>
+        <td>
+          <% if card.image_key.present? %>
+            <% proxy_url = image_proxy_url(card.image_key, width: 240, height: 240, fit: "inside", format: "webp") %>
+            <%= fallback_image_tag proxy_url, alt: card.title, width: 120, height: 120 %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to "Edit", edit_brag_card_path(card) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

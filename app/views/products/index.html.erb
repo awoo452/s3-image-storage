@@ -1,0 +1,29 @@
+<h1>Products</h1>
+
+<p><%= link_to "New product", new_product_path %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Image</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= link_to product.name, product_path(product) %></td>
+        <td>
+          <% if product.image_key.present? %>
+            <% proxy_url = image_proxy_url(product.image_key, width: 240, height: 240, fit: "inside", format: "webp") %>
+            <%= fallback_image_tag proxy_url, alt: product.name, width: 120, height: 120 %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to "Edit", edit_product_path(product) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

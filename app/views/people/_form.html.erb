@@ -1,0 +1,31 @@
+<%= form_with(model: person, local: true) do |form| %>
+  <% if person.errors.any? %>
+    <div>
+      <h2><%= pluralize(person.errors.count, "error") %> prevented saving:</h2>
+      <ul>
+        <% person.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :image, "Main image" %><br>
+    <%= form.file_field :image %>
+  </div>
+
+  <div>
+    <%= form.label :alt_images, "Alt images (multiple)" %><br>
+    <%= form.file_field :alt_images, multiple: true %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

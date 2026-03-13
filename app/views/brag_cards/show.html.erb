@@ -1,0 +1,13 @@
+<h1><%= @brag_card.title %></h1>
+
+<p><%= link_to "Back to brag cards", brag_cards_path %></p>
+<p><%= link_to "Edit", edit_brag_card_path(@brag_card) %></p>
+
+<h2>Image</h2>
+<% if @brag_card.image_key.present? %>
+  <% proxy_url = image_proxy_url(@brag_card.image_key, width: 900, height: 900, fit: "inside", format: "webp") %>
+  <%= fallback_image_tag proxy_url, alt: @brag_card.title, width: 300 %>
+  <p>Key: <%= @brag_card.image_key %></p>
+<% else %>
+  <p>No image yet.</p>
+<% end %>

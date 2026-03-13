@@ -1,0 +1,34 @@
+<h1>S3 Image Storage Reference</h1>
+
+<p>This app is a reference implementation for S3-backed image workflows.</p>
+
+<h2>Collections</h2>
+
+<ul>
+  <li><%= link_to "Products", products_path %></li>
+  <li><%= link_to "People (Personal Images)", people_path %></li>
+  <li><%= link_to "Brag Cards", brag_cards_path %></li>
+</ul>
+
+<h2>Recent</h2>
+
+<h3>Products</h3>
+<ul>
+  <% @products.each do |product| %>
+    <li><%= link_to product.name, product_path(product) %></li>
+  <% end %>
+</ul>
+
+<h3>People</h3>
+<ul>
+  <% @people.each do |person| %>
+    <li><%= link_to person.name, person_path(person) %></li>
+  <% end %>
+</ul>
+
+<h3>Brag Cards</h3>
+<ul>
+  <% @brag_cards.each do |card| %>
+    <li><%= link_to card.title, brag_card_path(card) %></li>
+  <% end %>
+</ul>
