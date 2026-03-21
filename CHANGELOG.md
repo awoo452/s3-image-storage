@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.5] - 2026-03-20
+### Added
+- Added controller coverage for home, products, people, brag cards, and the S3 proxy.
+- Added model coverage for product slugging, person defaults, and brag card validation.
+- Added a system smoke test for the home page and an env helper for S3 proxy tests.
+
 ## [0.1.4] - 2026-03-19
 ### Changed
 - Refreshed Gemfile.lock via bundle update for Ruby 4.0.2.
