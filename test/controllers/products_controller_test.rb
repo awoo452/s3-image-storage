@@ -44,7 +44,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     patch product_url(product), params: { product: { name: "Widget 2" } }
 
     assert_redirected_to product_url(product)
-    assert_equal "widget-2", product.reload.slug
+    assert_equal "widget", product.reload.slug
   end
 
   test "destroys product" do

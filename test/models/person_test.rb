@@ -18,7 +18,7 @@ class PersonTest < ActiveSupport::TestCase
     person = Person.new(name: "Ada", alt_image_keys: ["people/1/alt-1.jpg"])
     service = Struct.new(:presigned_url).new("https://example.com/alt.jpg")
 
-    S3Service.stub(:new, service) do
+    with_stubbed_method(S3Service, :new, service) do
       assert_equal ["https://example.com/alt.jpg"], person.alt_image_urls
     end
   end

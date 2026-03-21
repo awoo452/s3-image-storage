@@ -18,7 +18,7 @@ class ProductTest < ActiveSupport::TestCase
     product = Product.new(name: "Widget", slug: "widget", image_key: "products/1/main.jpg")
     service = Struct.new(:presigned_url).new("https://example.com/main.jpg")
 
-    S3Service.stub(:new, service) do
+    with_stubbed_method(S3Service, :new, service) do
       assert_equal "https://example.com/main.jpg", product.image_url
     end
   end

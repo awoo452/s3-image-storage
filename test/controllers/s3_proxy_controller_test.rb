@@ -4,7 +4,7 @@ class S3ProxyControllerTest < ActionDispatch::IntegrationTest
   Result = Struct.new(:redirect_url)
 
   test "returns not found when no redirect url" do
-    S3Proxy::ShowData.stub(:call, Result.new(nil)) do
+    with_stubbed_method(S3Proxy::ShowData, :call, Result.new(nil)) do
       get s3_media_url(key: "missing")
     end
 
@@ -12,7 +12,7 @@ class S3ProxyControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "returns forbidden for disallowed host" do
-    S3Proxy::ShowData.stub(:call, Result.new("https://evil.example.com/file")) do
+    with_stubbed_method(S3Proxy::ShowData, :call, Result.new("https://evil.example.com/file")) do
       get s3_media_url(key: "file")
     end
 
@@ -22,7 +22,7 @@ class S3ProxyControllerTest < ActionDispatch::IntegrationTest
   test "redirects to allowed host" do
     with_env("AWS_BUCKET" => "my-bucket", "AWS_REGION" => "us-west-1") do
       url = "https://my-bucket.s3.us-west-1.amazonaws.com/people/1/main.jpg"
-      S3Proxy::ShowData.stub(:call, Result.new(url)) do
+      with_stubbed_method(S3Proxy::ShowData, :call, Result.new(url)) do
         get s3_media_url(key: "people/1/main")
       end
 

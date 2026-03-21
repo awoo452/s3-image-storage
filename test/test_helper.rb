@@ -34,5 +34,19 @@ module ActiveSupport
         end
       end
     end
+
+    def with_stubbed_method(klass, method_name, replacement)
+      original = klass.method(method_name)
+      klass.define_singleton_method(method_name) do |*args, &block|
+        if replacement.respond_to?(:call)
+          replacement.call(*args, &block)
+        else
+          replacement
+        end
+      end
+      yield
+    ensure
+      klass.define_singleton_method(method_name, original)
+    end
   end
 end
