@@ -15,11 +15,15 @@ class PersonTest < ActiveSupport::TestCase
   end
 
   test "alt image urls uses s3 service" do
-    person = Person.new(name: "Ada", alt_image_keys: ["people/1/alt-1.jpg"])
-    service = Struct.new(:presigned_url).new("https://example.com/alt.jpg")
+    person = Person.new(name: "Ada", alt_image_keys: [ "people/1/alt-1.jpg" ])
+    service = Object.new
+    service.define_singleton_method(:presigned_url) do |key, _expires_in = nil|
+      raise "unexpected key #{key}" unless key == "people/1/alt-1.jpg"
+      "https://example.com/alt.jpg"
+    end
 
     with_stubbed_method(S3Service, :new, service) do
-      assert_equal ["https://example.com/alt.jpg"], person.alt_image_urls
+      assert_equal [ "https://example.com/alt.jpg" ], person.alt_image_urls
     end
   end
 end

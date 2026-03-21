@@ -16,7 +16,11 @@ class ProductTest < ActiveSupport::TestCase
 
   test "image url uses s3 service" do
     product = Product.new(name: "Widget", slug: "widget", image_key: "products/1/main.jpg")
-    service = Struct.new(:presigned_url).new("https://example.com/main.jpg")
+    service = Object.new
+    service.define_singleton_method(:presigned_url) do |key, _expires_in = nil|
+      raise "unexpected key #{key}" unless key == "products/1/main.jpg"
+      "https://example.com/main.jpg"
+    end
 
     with_stubbed_method(S3Service, :new, service) do
       assert_equal "https://example.com/main.jpg", product.image_url
