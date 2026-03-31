@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.13] - 2026-03-30
+### Changed
+- Updated mcp to 0.10.0 to address CVE-2026-33946.
+
 ## [0.1.12] - 2026-03-27
 ### Changed
 - Updated dependencies: rails 8.1.3, solid_queue 1.4.0, thruster 0.1.20, action_text-trix 2.1.18, json 2.19.3, bigdecimal 4.1.0, net-imap 0.6.3.
